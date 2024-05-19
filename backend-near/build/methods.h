@@ -1,0 +1,5 @@
+DEFINE_NEAR_METHOD(add_service)
+DEFINE_NEAR_METHOD(complete_service)
+DEFINE_NEAR_METHOD(get_services)
+DEFINE_NEAR_METHOD(init)
+DEFINE_NEAR_METHOD(use_service)
