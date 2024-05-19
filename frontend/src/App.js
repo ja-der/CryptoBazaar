@@ -1,16 +1,82 @@
+import React, { useState } from "react";
+import { Container, Typography, Button, TextField, Modal } from "@mui/material";
 import ProviderContent from "./components/ProviderContent";
 
 function App() {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <div className="bg-amber-100 h-full flex flex-col items-center">
-      <h1 className="text-3xl my-8">Blockchain Marketplace</h1>
-      <ProviderContent />
-      <div className="flex mt-auto mb-5">
-        <button className="bg-green-300 hover:bg-green-500 text-black py-1 px-2 rounded">
-          Add service
-        </button>
-      </div>
-    </div>
+    <>
+      <Container className="min-h-screen flex flex-col items-center justify-center">
+        <Typography variant="h3" mt={8}>
+          Blockchain Marketplace
+        </Typography>
+        <ProviderContent />
+        <div style={{ marginTop: "auto", marginBottom: "1rem" }}>
+          <Button
+            variant="contained"
+            className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded"
+            onClick={handleOpen}
+          >
+            Add service
+          </Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div className="flex items-center justify-center w-full h-full">
+              <div className="bg-white rounded p-4 w-1/2">
+                <Typography
+                  id="modal-modal-title"
+                  variant="h6"
+                  component="h2"
+                  className="mb-4"
+                >
+                  Add New Service
+                </Typography>
+                <TextField
+                  label="Service Name"
+                  variant="outlined"
+                  fullWidth
+                  className="mb-4"
+                />
+                <TextField
+                  label="Provider"
+                  variant="outlined"
+                  fullWidth
+                  className="mb-4"
+                />
+                <TextField
+                  label="Payment"
+                  variant="outlined"
+                  fullWidth
+                  className="mb-4"
+                />
+                <div className="flex justify-end">
+                  <Button
+                    variant="contained"
+                    className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded"
+                    onClick={handleClose}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      </Container>
+    </>
   );
 }
 

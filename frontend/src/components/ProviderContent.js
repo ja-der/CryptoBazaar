@@ -1,4 +1,5 @@
 import React from "react";
+import { Paper, Typography } from "@mui/material";
 import ContentItem from "./ContentItem";
 
 const mock = [
@@ -17,51 +18,31 @@ const mock = [
     by: "Provider 3",
     pay: "300",
   },
-  {
-    service: "Service 1",
-    by: "Provider 1",
-    pay: "100",
-  },
-  {
-    service: "Service 2",
-    by: "Provider 2",
-    pay: "200",
-  },
-  {
-    service: "Service 3",
-    by: "Provider 3",
-    pay: "300",
-  },
-  {
-    service: "Service 1",
-    by: "Provider 1",
-    pay: "100",
-  },
-  {
-    service: "Service 2",
-    by: "Provider 2",
-    pay: "200",
-  },
-  {
-    service: "Service 3",
-    by: "Provider 3",
-    pay: "300",
-  },
-  {
-    service: "Service 1",
-    by: "Provider 1",
-    pay: "100",
-  },
+  // Add more mock data as needed
 ];
 
 const ProviderContent = () => {
   return (
-    <div className="w-6/12 overflow-auto mb-5 p-3 bg-orange-200 rounded-lg">
-      <div className="flex flex-col w-full gap-y-3">
-        <div className="flex justify-between w-7/12">
-          <span className="basis-1/3 text-lg font-semibold">Service</span>
-          <span className="basis-1/3 text-lg font-semibold">By</span>
-          <span className="basis-1/3 text-lg font-semibold">Pay</span>
+    <Paper
+      sx={{
+        width: "50%",
+        overflow: "auto",
+        marginBottom: "1rem",
+        padding: "1rem",
+        borderRadius: "8px",
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6" sx={{ width: "33%" }}>
+            Service
+          </Typography>
+          <Typography variant="h6" sx={{ width: "33%" }}>
+            By
+          </Typography>
+          <Typography variant="h6" sx={{ width: "33%" }}>
+            Pay
+          </Typography>
         </div>
         {mock.map((item, index) => (
           <ContentItem
@@ -72,7 +53,7 @@ const ProviderContent = () => {
           />
         ))}
       </div>
-    </div>
+    </Paper>
   );
 };
 
