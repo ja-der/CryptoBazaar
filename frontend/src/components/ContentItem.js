@@ -36,8 +36,13 @@ const ContentItem = ({ service, by, pay, description }) => {
         <span className="w-1/9">{pay}</span>
 
         <div className="w-1/4 flex justify-center items-center ml-4">
-          <Button variant="contained" style={buttonStyle} onClick={handleOpen} className="h-15">
-            {bookingConfirmed ? "See Details" : "Book service"}
+          <Button
+            variant="contained"
+            style={buttonStyle}
+            onClick={handleOpen}
+            className="h-15"
+          >
+            {bookingConfirmed ? "See Details" : "Accept Job"}
           </Button>
         </div>
       </div>
@@ -66,9 +71,7 @@ const ContentItem = ({ service, by, pay, description }) => {
           <p>
             <strong>Service Description:</strong>
           </p>
-          <p>
-            {description}
-          </p>
+          <p>{description}</p>
           {bookingConfirmed ? (
             <p className="text-green-600 font-semibold my-4">
               Booking confirmed!

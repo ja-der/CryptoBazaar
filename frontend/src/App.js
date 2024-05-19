@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Typography, Button, TextField, Modal } from "@mui/material";
-import ProviderContent from "./components/ProviderContent";
+import RequestedServicesContent from "./components/RequestedServicesContent";
+import AcceptedServicesContent from "./components/AcceptedServicesContent";
 import * as nearAPI from "near-api-js";
 
 const { connect, keyStores, WalletConnection, Contract } = nearAPI;
@@ -33,8 +34,8 @@ const contract = new Contract(
   "bcmptest1.testnet",
   {
     // name of contract you're connecting to
-    viewMethods: ["get_services"], // view methods do not change state but usually return a value
-    changeMethods: ["add_service"], // change methods modify state
+    viewMethods: ["get_services", "get_accepted_services"], // view methods do not change state but usually return a value
+    changeMethods: ["add_service", "complete_service"], // change methods modify state
   }
 );
 
@@ -50,6 +51,7 @@ function App() {
 
   // Handle data
   const [tasks, setTasks] = useState([]);
+  const [acceptedTasks, setAcceptedTasks] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +59,13 @@ function App() {
       console.log(data);
       setTasks(data);
     };
+    const fetchAcceptedData = async () => {
+      const data = await contract.get_accepted_services();
+      console.log(data);
+      setAcceptedTasks(data);
+    };
     fetchData();
+    fetchAcceptedData();
   }, []);
 
   // Handle form
@@ -72,12 +80,23 @@ function App() {
       pay: pay,
     };
     await contract.add_service({
-      service: service,
-      by: by,
-      pay: pay,
+      args: data,
+      amount: pay * 100,
     });
     handleClose();
     setTasks([...tasks, data]);
+  };
+
+  const completeTask = async (service, by) => {
+    await contract.complete_service({
+      args: {
+        service: service,
+        by: by,
+      },
+    });
+    setAcceptedTasks(
+      acceptedTasks.filter((item) => item.service !== service && item.by !== by)
+    );
   };
 
   return (
@@ -128,7 +147,11 @@ function App() {
         <Typography variant="h4" mt={8} mb={4} className="text-center">
           Services Available
         </Typography>
-        <ProviderContent tasks={tasks} />
+        <RequestedServicesContent tasks={tasks} />
+        <AcceptedServicesContent
+          acceptedTasks={acceptedTasks}
+          completeTask={completeTask}
+        />
         <div className="flex justify-center mt-8 mb-8">
           {" "}
           {/* Centering the button */}
