@@ -1,17 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Typography, Button, TextField, Modal } from "@mui/material";
 import ProviderContent from "./components/ProviderContent";
+import * as nearAPI from "near-api-js";
+
+const { connect, keyStores, WalletConnection, Contract } = nearAPI;
+
+const connectionConfig = {
+  networkId: "testnet",
+  keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+  nodeUrl: "https://rpc.testnet.near.org",
+  walletUrl: "https://testnet.mynearwallet.com/",
+  helperUrl: "https://helper.testnet.near.org",
+  explorerUrl: "https://testnet.nearblocks.io",
+};
+
+// connect to NEAR
+const nearConnection = await connect(connectionConfig);
+
+const account = await nearConnection.account("bcmptest1.testnet");
+
+const contract = new Contract(
+  account, // the account object that is connecting
+  "bcmptest1.testnet",
+  {
+    // name of contract you're connecting to
+    viewMethods: ["get_services"], // view methods do not change state but usually return a value
+  }
+);
 
 function App() {
+  // Handles modal
   const [open, setOpen] = useState(false);
-
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
+
+  // Handle data
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await contract.get_services();
+      console.log(data);
+      setTasks(data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -61,7 +98,7 @@ function App() {
         <Typography variant="h4" mt={8} mb={4} className="text-center">
           Services Available
         </Typography>
-        <ProviderContent />
+        <ProviderContent tasks={tasks} />
         <div className="flex justify-center mt-8 mb-8">
           {" "}
           {/* Centering the button */}

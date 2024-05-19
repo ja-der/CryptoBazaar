@@ -2,11 +2,9 @@
 import { NearBindgen, near, call, view, initialize, assert } from 'near-sdk-js';
 
 interface TaskType {
-  username: string;
-  userAddress: string;
-  taskTitle: string;
-  taskDescription: string;
-  cost: number;
+  service: string;
+  by: string;
+  pay: number;
 }
 
 @NearBindgen({ requireInit: true})
@@ -22,11 +20,11 @@ class UserContract {
   acceptedTasks: TaskType[] = [];
 
   @call({})
-  use_service({username, taskTitle}: {username: string, taskTitle: string}) {
+  use_service({service, by}: {service: string, by: string}) {
     // Move the task from tasks to acceptedTasks
     let service_idx = 0;
     for(let i = 0; i < this.tasks.length; i++) {
-      if(this.tasks[i].username == username && this.tasks[i].taskTitle == taskTitle) {
+      if(this.tasks[i].service == service && this.tasks[i].by == by) {
         service_idx = i;
         break;
       }
@@ -36,11 +34,11 @@ class UserContract {
   }
 
   @call({})
-  complete_service({username, taskTitle}: {username: string, taskTitle: string}) {
+  complete_service({service, by}: {service: string, by: string}) {
     // Delete the task from acceptedTasks
     let delete_idx = 0;
     for(let i = 0; i < this.acceptedTasks.length; i++) {
-      if(this.acceptedTasks[i].username == username && this.acceptedTasks[i].taskTitle == taskTitle) {
+      if(this.acceptedTasks[i].service == service && this.acceptedTasks[i].by == by) {
         delete_idx = i;
         break;
       }
@@ -49,11 +47,11 @@ class UserContract {
   }
 
   @call({})
-  delete_service({username, taskTitle}: {username: string, taskTitle: string}) {
+  delete_service({service, by}: {service: string, by: string}) {
     // Delete the task from acceptedTasks
     let delete_idx = 0;
     for(let i = 0; i < this.tasks.length; i++) {
-      if(this.tasks[i].username == username && this.tasks[i].taskTitle == taskTitle) {
+      if(this.tasks[i].service == service && this.tasks[i].by == by) {
         delete_idx = i;
         break;
       }
@@ -62,16 +60,14 @@ class UserContract {
   }
 
   @call({payableFunction: true})
-  add_service({username, userAddress, taskTitle, taskDescription, cost}: TaskType) {
+  add_service({service, by, pay}: TaskType) {
 
       const bid = near.attachedDeposit()
 
       const newTask: TaskType = {
-        username: username,
-        userAddress: userAddress,
-        taskTitle: taskTitle,
-        taskDescription: taskDescription,
-        cost: cost
+        service: service,
+        by: by,
+        pay: pay
       };
       this.tasks.push(newTask);
     }

@@ -6,67 +6,70 @@ const mock = [
     service: "Service 1",
     by: "Provider 1",
     pay: "100",
-    description: "meow meow"
+    description: "meow meow",
   },
   {
     service: "Service 2",
     by: "Provider 2",
     pay: "200",
-    description: "meow meow"
+    description: "meow meow",
   },
   {
     service: "Service 3",
     by: "Provider 3",
     pay: "300",
-    description: "meow meow"
+    description: "meow meow",
   },
   {
     service: "Service 1",
     by: "Provider 1",
     pay: "100",
-    description: "meow meow"
+    description: "meow meow",
   },
   {
     service: "Service 2",
     by: "Provider 2",
     pay: "200",
-    description: "meow meow"
+    description: "meow meow",
   },
   {
     service: "Service 3",
     by: "Provider 3",
     pay: "300",
-    description: "meow meow"
+    description: "meow meow",
   },
   {
     service: "Service 1",
     by: "Provider 1",
     pay: "100",
-    description: "meow meow"
+    description: "meow meow",
   },
   {
     service: "Service 2",
     by: "Provider 2",
     pay: "200",
-    description: "meow meow"
+    description: "meow meow",
   },
   {
     service: "Service 3",
     by: "Provider 3",
     pay: "300",
-    description: "meow meow"
+    description: "meow meow",
   },
   {
     service: "Service 1",
     by: "Provider 1",
     pay: "100",
-    description: "meow meow"
+    description: "meow meow",
   },
 ];
 
-const ProviderContent = () => {
+const ProviderContent = ({ tasks }) => {
   return (
-    <div className="w-full flex flex-col items-center gap-y-3">
+    <div
+      key={tasks.length}
+      className="w-full flex flex-col items-center gap-y-3"
+    >
       <h2 className="text-2xl font-semibold text-gray-800 mb-3">
         Services Provided
       </h2>
@@ -83,13 +86,12 @@ const ProviderContent = () => {
               Pay
             </span>
           </div>
-          {mock.map((item, index) => (
+          {tasks.map((item, index) => (
             <ContentItem
               key={index}
-              service={item.service}
-              by={item.by}
-              pay={item.pay}
-              description={item.description}
+              service={item.taskTitle}
+              by={item.username}
+              pay={item.userAddress}
             />
           ))}
         </div>
