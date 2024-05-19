@@ -23,25 +23,42 @@ class UserContract {
 
   @call({})
   use_service({username, taskTitle}: {username: string, taskTitle: string}) {
-    this.acceptedTasks.push(this.tasks.filter(task => 
-      task.username == username && task.taskTitle == taskTitle)[0])
+    // Move the task from tasks to acceptedTasks
+    let service_idx = 0;
+    for(let i = 0; i < this.tasks.length; i++) {
+      if(this.tasks[i].username == username && this.tasks[i].taskTitle == taskTitle) {
+        service_idx = i;
+        break;
+      }
+    }
+    this.acceptedTasks.push(this.tasks[service_idx]);
+    this.tasks.splice(service_idx, 1);
   }
 
   @call({})
   complete_service({username, taskTitle}: {username: string, taskTitle: string}) {
-    let j = 0
+    // Delete the task from acceptedTasks
+    let delete_idx = 0;
     for(let i = 0; i < this.acceptedTasks.length; i++) {
       if(this.acceptedTasks[i].username == username && this.acceptedTasks[i].taskTitle == taskTitle) {
-        j = i 
-        this.acceptedTasks.splice(j, 1)
-        break
+        delete_idx = i;
+        break;
       }
     }
+    this.acceptedTasks.splice(delete_idx, 1);
   }
 
   @call({})
   delete_service({username, taskTitle}: {username: string, taskTitle: string}) {
-    this.tasks = this.tasks.filter(task => task.username !== username && task.taskTitle !== taskTitle)
+    // Delete the task from acceptedTasks
+    let delete_idx = 0;
+    for(let i = 0; i < this.tasks.length; i++) {
+      if(this.tasks[i].username == username && this.tasks[i].taskTitle == taskTitle) {
+        delete_idx = i;
+        break;
+      }
+    }
+    this.tasks.splice(delete_idx, 1);
   }
 
   @call({payableFunction: true})
@@ -62,5 +79,10 @@ class UserContract {
   @view({})
   get_services() : TaskType[] {
       return this.tasks
+    }
+
+  @view({})
+  get_accepted_services() : TaskType[] {
+      return this.acceptedTasks
     }
 }
