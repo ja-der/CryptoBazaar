@@ -61,6 +61,12 @@ function App() {
                 className="mb-4"
               />
               <TextField
+                label="Description"
+                variant="outlined"
+                fullWidth
+                className="mb-4"
+              />
+              <TextField
                 label="Payment"
                 variant="outlined"
                 fullWidth

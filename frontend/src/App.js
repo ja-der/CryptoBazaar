@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       {/* Hero Section */}
-      <div className="bg-blue-500 py-12 text-white text-center">
+      <div className="bg-gradient-to-b from-blue-700 py-12 text-white text-center">
         <Container>
           <Typography variant="h3" className="mb-4 font-bold">
             CryptoBazaar
@@ -26,7 +26,7 @@ function App() {
           </Typography>
           {/* Feature Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:animate-bouce">
               <Typography variant="h5" className="mb-4 font-bold text-blue-500">
                 Secure Transactions
               </Typography>
@@ -62,7 +62,7 @@ function App() {
           Services Available
         </Typography>
         <ProviderContent />
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-8 mb-8">
           {" "}
           {/* Centering the button */}
           <Button

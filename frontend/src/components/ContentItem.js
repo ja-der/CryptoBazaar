@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal } from "@mui/material";
 
-const ContentItem = ({ service, by, pay }) => {
+const ContentItem = ({ service, by, pay, description }) => {
   const [open, setOpen] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
 
@@ -30,13 +30,13 @@ const ContentItem = ({ service, by, pay }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between w-full mt-4">
+      <div className="flex items-center justify-between w-full mt-2 mb-2">
         <span className="w-1/3">{service}</span>
         <span className="w-1/3">{by}</span>
         <span className="w-1/9">{pay}</span>
 
-        <div className="w-1/4 flex justify-center items-center">
-          <Button variant="contained" style={buttonStyle} onClick={handleOpen}>
+        <div className="w-1/4 flex justify-center items-center ml-4">
+          <Button variant="contained" style={buttonStyle} onClick={handleOpen} className="h-15">
             {bookingConfirmed ? "See Details" : "Book service"}
           </Button>
         </div>
@@ -62,6 +62,12 @@ const ContentItem = ({ service, by, pay }) => {
           </p>
           <p>
             <strong>Payment:</strong> {pay}
+          </p>
+          <p>
+            <strong>Service Description:</strong>
+          </p>
+          <p>
+            {description}
           </p>
           {bookingConfirmed ? (
             <p className="text-green-600 font-semibold my-4">

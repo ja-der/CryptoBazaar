@@ -6,51 +6,61 @@ const mock = [
     service: "Service 1",
     by: "Provider 1",
     pay: "100",
+    description: "meow meow"
   },
   {
     service: "Service 2",
     by: "Provider 2",
     pay: "200",
+    description: "meow meow"
   },
   {
     service: "Service 3",
     by: "Provider 3",
     pay: "300",
+    description: "meow meow"
   },
   {
     service: "Service 1",
     by: "Provider 1",
     pay: "100",
+    description: "meow meow"
   },
   {
     service: "Service 2",
     by: "Provider 2",
     pay: "200",
+    description: "meow meow"
   },
   {
     service: "Service 3",
     by: "Provider 3",
     pay: "300",
+    description: "meow meow"
   },
   {
     service: "Service 1",
     by: "Provider 1",
     pay: "100",
+    description: "meow meow"
   },
   {
     service: "Service 2",
     by: "Provider 2",
     pay: "200",
+    description: "meow meow"
   },
   {
     service: "Service 3",
     by: "Provider 3",
     pay: "300",
+    description: "meow meow"
   },
   {
     service: "Service 1",
     by: "Provider 1",
     pay: "100",
+    description: "meow meow"
   },
 ];
 
@@ -64,10 +74,10 @@ const ProviderContent = () => {
         <div className="flex flex-col w-full gap-y-3 p-3">
           <div className="flex justify-between w-full">
             <span className="w-1/3 text-lg font-semibold text-gray-800">
-              Service
+              Service Needed
             </span>
             <span className="w-1/3 text-lg font-semibold text-gray-800">
-              By
+              For
             </span>
             <span className="w-1/3 text-lg font-semibold text-gray-800">
               Pay
@@ -79,6 +89,7 @@ const ProviderContent = () => {
               service={item.service}
               by={item.by}
               pay={item.pay}
+              description={item.description}
             />
           ))}
         </div>
