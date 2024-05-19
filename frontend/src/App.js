@@ -17,6 +17,15 @@ const connectionConfig = {
 // connect to NEAR
 const nearConnection = await connect(connectionConfig);
 
+const walletConnection = new WalletConnection(nearConnection, "bcmptest1");
+
+if (!walletConnection.isSignedIn()) {
+  walletConnection.requestSignIn({
+    contractId: "bcmptest1.testnet",
+    successUrl: "http://localhost:3000",
+  });
+}
+
 const account = await nearConnection.account("bcmptest1.testnet");
 
 const contract = new Contract(
@@ -25,6 +34,7 @@ const contract = new Contract(
   {
     // name of contract you're connecting to
     viewMethods: ["get_services"], // view methods do not change state but usually return a value
+    changeMethods: ["add_service"], // change methods modify state
   }
 );
 
@@ -49,6 +59,26 @@ function App() {
     };
     fetchData();
   }, []);
+
+  // Handle form
+  const [service, setService] = useState("");
+  const [by, setBy] = useState("");
+  const [pay, setPay] = useState(1);
+
+  const addService = async () => {
+    const data = {
+      service: service,
+      by: by,
+      pay: pay,
+    };
+    await contract.add_service({
+      service: service,
+      by: by,
+      pay: pay,
+    });
+    handleClose();
+    setTasks([...tasks, data]);
+  };
 
   return (
     <>
@@ -139,24 +169,28 @@ function App() {
               variant="outlined"
               fullWidth
               className="mb-4"
+              onChange={(e) => setService(e.target.value)}
             />
             <TextField
               label="Provider"
               variant="outlined"
               fullWidth
               className="mb-4"
+              onChange={(e) => setBy(e.target.value)}
             />
             <TextField
               label="Payment"
               variant="outlined"
+              type="number"
               fullWidth
               className="mb-4"
+              onChange={(e) => setPay(Number.parseInt(e.target.value))}
             />
             <div className="flex justify-end">
               <Button
                 variant="contained"
                 className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded"
-                onClick={handleClose}
+                onClick={addService}
               >
                 Submit
               </Button>

@@ -59,6 +59,12 @@ class UserContract {
     this.tasks.splice(delete_idx, 1);
   }
 
+  @call({})
+  clear_all({}) {
+    this.tasks = [];
+    this.acceptedTasks = [];
+  }
+
   @call({payableFunction: true})
   add_service({service, by, pay}: TaskType) {
 

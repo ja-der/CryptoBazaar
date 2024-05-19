@@ -1,69 +1,6 @@
 import React from "react";
 import ContentItem from "./ContentItem";
 
-const mock = [
-  {
-    service: "Service 1",
-    by: "Provider 1",
-    pay: "100",
-    description: "meow meow",
-  },
-  {
-    service: "Service 2",
-    by: "Provider 2",
-    pay: "200",
-    description: "meow meow",
-  },
-  {
-    service: "Service 3",
-    by: "Provider 3",
-    pay: "300",
-    description: "meow meow",
-  },
-  {
-    service: "Service 1",
-    by: "Provider 1",
-    pay: "100",
-    description: "meow meow",
-  },
-  {
-    service: "Service 2",
-    by: "Provider 2",
-    pay: "200",
-    description: "meow meow",
-  },
-  {
-    service: "Service 3",
-    by: "Provider 3",
-    pay: "300",
-    description: "meow meow",
-  },
-  {
-    service: "Service 1",
-    by: "Provider 1",
-    pay: "100",
-    description: "meow meow",
-  },
-  {
-    service: "Service 2",
-    by: "Provider 2",
-    pay: "200",
-    description: "meow meow",
-  },
-  {
-    service: "Service 3",
-    by: "Provider 3",
-    pay: "300",
-    description: "meow meow",
-  },
-  {
-    service: "Service 1",
-    by: "Provider 1",
-    pay: "100",
-    description: "meow meow",
-  },
-];
-
 const ProviderContent = ({ tasks }) => {
   return (
     <div
@@ -89,9 +26,9 @@ const ProviderContent = ({ tasks }) => {
           {tasks.map((item, index) => (
             <ContentItem
               key={index}
-              service={item.taskTitle}
-              by={item.username}
-              pay={item.userAddress}
+              service={item.service}
+              by={item.by}
+              pay={item.pay}
             />
           ))}
         </div>
